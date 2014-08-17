@@ -1,0 +1,80 @@
+<style>
+    .form-inline .control-label { width: 120px; }
+</style>
+
+<h2><%= @email_blast.title %></h2>
+<hr/>
+
+<div class="col-md-9">
+<%= simple_form_for([:admin, :marketing, @email_blast], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <% unless @email_blast.dispatch_time.nil? %>
+    <div class="alert alert-info">This email blast was dispatched at <%= @email_blast.dispatch_time %></div>
+  <% end %>
+  
+  <%= f.input :title, input_html: { class: 'span5'} %>
+  <%= f.input :approved %>
+  <%= f.input :scheduled_time %>
+  <%= f.association :email_list %>
+  <%= f.association :voucher_group %>
+  <%= f.input :from_name %>
+  <%= f.input :from_email %>
+  <%= f.input :subject, input_html: { class: 'span9'} %>
+  <%= f.input :html_body_url, input_html: { class: 'span9'} %>
+  <%= f.input :text_body_url, input_html: { class: 'span9'} %>
+  <%= f.input :html %>
+  <%= f.input :body, input_html: { class: 'span12', rows: 16 } %>
+  
+  <div class="form-actions">
+  	<%= f.button :submit %>
+  </div>
+  
+<% end %>
+</div>
+
+
+<% unless @email_blast.id.nil? %>
+    <div class="col-md-3">
+      <table class="table table-bordered table-condensed summary">
+        <tr>
+          <td>Sent:</td>
+          <td><%= @email_blast.sent %></td>
+        </tr>
+        <tr>
+          <td>Opens:</td>
+          <td><%= @email_blast.opens %></td>
+        </tr>
+        <tr>
+          <td>Clicks:</td>
+          <td><%= @email_blast.clicks %></td>
+        </tr>
+        <tr>
+          <td>Bounces:</td>
+          <td><%= @email_blast.bounces %></td>
+        </tr>
+        <tr>
+          <td>Sales:</td>
+          <td><%= @email_blast.sales %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
+
+
+<% content_for :title do %>
+    Email Lists: <%= @email_blast.title %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/marketing_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">Marketing</a></li>
+	<li><%= link_to "Email Blasts", admin_marketing_email_blasts_path %></li>
+	<li class="active"><%= @email_blast.title %></li>
+<% end %>

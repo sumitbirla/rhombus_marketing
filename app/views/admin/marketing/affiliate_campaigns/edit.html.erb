@@ -1,0 +1,45 @@
+<style>
+    .form-inline .control-label { width: 140px; }
+</style>
+
+<h2><%= @affiliate_campaign.name %></h2>
+<hr/>
+
+<%= simple_form_for([:admin, :marketing, @affiliate_campaign], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+
+  <%= f.association :affiliate %>
+  <%= f.input :name %>
+  <%= f.input :destination_url %>
+  <%= f.input :signup_commission %>
+  <%= f.input :sale_commission %>
+  <%= f.input :start_date %>
+  <%= f.input :end_date %>
+  <%= f.input :record_history %>
+  <%= f.input :raw_clicks %>
+  <%= f.input :unique_clicks %>
+  <%= f.input :signups %>
+  <%= f.input :orders %>
+  
+  <div class="form-actions">
+  	<%= f.button :submit %>
+  </div>
+<% end %>
+
+
+
+<% content_for :title do %>
+    Affiliate Campaigns: <%= @affiliate_campaign.name %>
+<% end %>
+
+<% content_for :menu do
+    render "admin/shared/marketing_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">Marketing</a></li>
+	<li><%= link_to "Affiliate Campaigns", admin_marketing_affiliate_campaigns_path %></li>
+	<li class="active"><%= @affiliate_campaign.name %></li>
+<% end %>
