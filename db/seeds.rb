@@ -1,3 +1,5 @@
+SearchPath.create(short_code: 'e', url: '/admin/marketing/email_subscribers', description: 'Search for an email subscriber')
+
 Permission.create(section: 'marketing', resource: 'admin', action: 'login')
 
 Permission.create(section: 'marketing', resource: 'email_list', action: 'read')
