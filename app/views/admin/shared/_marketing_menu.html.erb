@@ -1,9 +1,9 @@
             <li class="<%= 'active' if request.original_url.include? 'admin/marketing' %>">
               <a href="#"><i class="fa fa-envelope fa-fw"></i> Marketing  <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
-                <li><%= link_to "Email Lists", admin_marketing_email_lists_path %></li>
-                <li><%= link_to "Email Blasts", admin_marketing_email_blasts_path %></li>
-                <li><%= link_to "Subscribers", admin_marketing_email_subscribers_path %></li>
-                <li><%= link_to "Affiliate Campaigns", admin_marketing_affiliate_campaigns_path %></li>
+				<li><%= link_to "Affiliate Campaigns", admin_marketing_affiliate_campaigns_path %></li>
+				<li><%= link_to "Email Blasts", admin_marketing_email_blasts_path %></li>
+                <li><%= link_to "Email Lists", admin_marketing_email_lists_path %></li>              
+                <li><%= link_to "Subscribers", admin_marketing_email_subscribers_path %></li>         
               </ul>
             </li>
