@@ -24,4 +24,6 @@ class EmailSubscriber < ActiveRecord::Base
   belongs_to :referrer, class_name: 'User', foreign_key: 'referred_by'
   has_many :subscriptions, class_name: 'EmailSubscription'
   validates_presence_of :email
+  validates_uniqueness_of :email, message: " is already subscribed."
+  
 end
