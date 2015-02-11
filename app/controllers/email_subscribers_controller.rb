@@ -26,6 +26,17 @@ class EmailSubscribersController < ApplicationController
   end
   
   
+  def resubscribe
+    @subscriber = EmailSubscriber.find_by(uuid: params[:uuid])
+    unless @subscriber.nil?
+      @subscriber.update_attribute(:opted_out, false)
+      EmailSubscription.where(email_subscriber_id: @subscriber.id).delete_all 
+      
+      params[:email_list_id].each { |x| EmailSubscription.create(email_list_id: x, email_subscriber_id: @subscriber.id) }
+    end
+  end
+  
+  
   private
   
     def email_subscriber_params

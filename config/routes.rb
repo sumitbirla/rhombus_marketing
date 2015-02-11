@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "eb" => "email_blasts#redirect"
   get "pixel" => "email_blasts#pixel"
   get "ocr/:uuid" => "email_subscribers#one_click_remove"
+  post "ocr/:uuid" => "email_subscribers#resubscribe"
   
   namespace :account do
     resources :email_subscriptions
