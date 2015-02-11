@@ -20,6 +20,11 @@ class EmailSubscribersController < ApplicationController
     
   end
   
+  def one_click_remove
+    @subscriber = EmailSubscriber.find_by(uuid: params[:uuid])
+    @subscriber.update_attribute(:opted_out, true) unless @subscriber.nil?
+  end
+  
   
   private
   

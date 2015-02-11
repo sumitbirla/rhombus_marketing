@@ -13,6 +13,7 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   def create
     @email_subscriber = EmailSubscriber.new(email_subscriber_params)
     @email_subscriber.ip_address = request.remote_ip
+    @email_subscriber.uuid = SecureRandom.uuid
 
     if @email_subscriber.save
       
@@ -85,7 +86,7 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   private
   
     def email_subscriber_params
-      params.require(:email_subscriber).permit(:email, :name, :bounces, :reported_spam, :opted_out, :data1, :data2)
+      params.require(:email_subscriber).permit!
     end
   
 end
