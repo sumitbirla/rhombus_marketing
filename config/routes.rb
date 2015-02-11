@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   
   resources :email_subscribers
   
+  get "eb" => "email_blasts#redirect"
+  get "pixel" => "email_blasts#pixel"
+  
   namespace :account do
     resources :email_subscriptions
   end

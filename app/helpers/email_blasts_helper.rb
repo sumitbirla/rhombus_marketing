@@ -1,0 +1,2 @@
+module EmailBlastsHelper
+end

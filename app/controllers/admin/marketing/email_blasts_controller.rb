@@ -11,7 +11,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
 
   def create
     @email_blast = EmailBlast.new(email_blast_params)
-    @email_blast.key = SecureRandom.uuid
+    @email_blast.uuid = SecureRandom.uuid
     
     if @email_blast.save
       redirect_to action: 'index', notice: 'Email Blast was successfully created.'
@@ -48,8 +48,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   private
   
     def email_blast_params
-      params.require(:email_blast).permit(:title, :scheduled_time, :approved, :email_list_id, :voucher_group_id,
-      :from_name, :from_email, :subject, :approved, :html, :body, :html_body_url, :text_body_url)
+      params.require(:email_blast).permit!
     end
   
 end
