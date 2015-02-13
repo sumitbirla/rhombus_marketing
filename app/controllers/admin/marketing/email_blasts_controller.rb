@@ -6,6 +6,31 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
 
   def new
     @email_blast = EmailBlast.new title: 'New email blast'
+    
+    # copy from email and name from previous blast
+    prev = EmailBlast.order(scheduled_time: :desc).first
+    unless prev.nil?
+      @email_blast.assign_attributes({
+        email_list_id: prev.email_list_id,
+        from_email: prev.from_email,
+        from_name: prev.from_name
+      })
+    end
+    
+    unless params[:daily_deal_id].nil?
+      dd = DailyDeal.find(params[:daily_deal_id])
+      web_url = Cache.setting(:system, "Website URL")
+      
+      @email_blast.assign_attributes({
+        title: dd.short_tag_line,
+        scheduled_time: dd.start_time,
+        subject: dd.title,
+        html_body_url: web_url + deals_email_path(uuid: dd.uuid),
+        text_body_url: web_url + deals_email_path(uuid: dd.uuid, format: :txt),
+        approved: false
+      })
+    end
+    
     render 'edit'
   end
 

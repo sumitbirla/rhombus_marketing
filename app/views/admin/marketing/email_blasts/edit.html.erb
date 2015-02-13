@@ -1,31 +1,32 @@
 <style>
+.form-inline { width: 100%; }
     .form-inline .control-label { width: 120px; }
 </style>
 
 <h2><%= @email_blast.title %></h2>
+<% unless @email_blast.dispatch_time.nil? %>
+  <div class="bs-callout bs-callout-info">This email blast was dispatched at <%= @email_blast.dispatch_time %></div>
+<% end %>
 <hr/>
 
-<div class="col-md-9">
+<div class="col-md-10">
 <%= simple_form_for([:admin, :marketing, @email_blast], html: { class: 'form-inline' }) do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
-  
-  <% unless @email_blast.dispatch_time.nil? %>
-    <div class="alert alert-info">This email blast was dispatched at <%= @email_blast.dispatch_time %></div>
-  <% end %>
-  
+
   <%= f.input :title, input_html: { class: 'span5'} %>
   <%= f.input :approved %>
   <%= f.input :scheduled_time %>
   <%= f.association :email_list %>
   <%= f.association :voucher_group %>
+  <hr/>
   <%= f.input :from_name %>
   <%= f.input :from_email %>
-  <%= f.input :subject, input_html: { class: 'span9'} %>
-  <%= f.input :html_body_url, input_html: { class: 'span9'} %>
-  <%= f.input :text_body_url, input_html: { class: 'span9'} %>
+  <%= f.input :subject %>
+  <%= f.input :html_body_url %>
+  <%= f.input :text_body_url %>
   <%= f.input :html %>
-  <%= f.input :body, input_html: { class: 'span12', rows: 16 } %>
+  <%= f.input :body, input_html: { rows: 16 } %>
   
   <div class="form-actions">
   	<%= f.button :submit %>
@@ -36,7 +37,7 @@
 
 
 <% unless @email_blast.id.nil? %>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <table class="table table-bordered table-condensed summary">
         <tr>
           <td>Sent:</td>
