@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailBlastsController < Admin::BaseController
   
   def index
-    @email_blasts = EmailBlast.page(params[:page]).order('scheduled_time DESC')
+    @email_blasts = EmailBlast.where(test: false).order(scheduled_time: :desc).page(params[:page])
   end
 
   def new
@@ -67,6 +67,33 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast = EmailBlast.find(params[:id])
     @email_blast.destroy
     redirect_to action: 'index', notice: 'Email Blast has been deleted.'
+  end
+  
+  def test
+    eb = EmailBlast.find(params[:id])
+    test_blast = eb.dup
+    test_list = EmailList.find_by(name: "Test Email Recipients")
+    
+    test_blast.assign_attributes({
+      email_list_id: test_list.id,
+      scheduled_time: DateTime.now,
+      subject: "[TEST] " + eb.subject,
+      approved: true,
+      test: true,
+      uuid: SecureRandom.uuid,
+      sent: 0,
+      opens: 0,
+      bounces: 0,
+      clicks: 0,
+      sales: 0,
+      dispatched: false,
+      dispatch_time: nil,
+      last_error: nil
+    })
+    test_blast.save
+    
+    flash[:info] = "Test email blast has been dispatched"
+    redirect_to :back
   end
   
   

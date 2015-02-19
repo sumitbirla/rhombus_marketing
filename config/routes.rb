@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     namespace :marketing do
       resources :email_lists
       resources :email_subscribers
-      resources :email_blasts
+      resources :email_blasts do 
+        member do
+          get "test"
+        end
+      end
       resources :affiliate_campaigns
     end 
   end

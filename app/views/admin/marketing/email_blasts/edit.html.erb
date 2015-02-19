@@ -3,17 +3,22 @@
     .form-inline .control-label { width: 120px; }
 </style>
 
+<% if @email_blast.persisted? %>
+  <%= link_to test_admin_marketing_email_blast_path(@email_blast), class: 'btn btn-sm btn-default pull-right' do %>
+    <i class="fa fa-arrow-circle-right"></i> Test Dispatch
+  <% end %>
+<% end %>
+
 <h2><%= @email_blast.title %></h2>
 <% unless @email_blast.dispatch_time.nil? %>
-  <div class="bs-callout bs-callout-info">This email blast was dispatched at <%= @email_blast.dispatch_time %></div>
+  <div class="bs-callout bs-callout-info">This email blast was dispatched at <%= systime @email_blast.dispatch_time %></div>
 <% end %>
+<%= render 'admin/shared/error_messages', object: @email_blast %>
 <hr/>
 
 <div class="col-md-10">
 <%= simple_form_for([:admin, :marketing, @email_blast], html: { class: 'form-inline' }) do |f| %>
-
-  <%= render 'admin/shared/error_messages', object: f.object %>
-
+  
   <%= f.input :title, input_html: { class: 'span5'} %>
   <%= f.input :approved %>
   <%= f.input :scheduled_time %>
