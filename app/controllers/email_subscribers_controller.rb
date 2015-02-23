@@ -19,9 +19,12 @@ class EmailSubscribersController < ApplicationController
           EmailSubscription.create(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
         end
       end
+      flash[:info] = "You are now subscribed to the following email lists"
+    else
+      flash[:error] = "The email you entered is not valid."
+      @error = true
     end
     
-    flash[:info] = "You are now subscribed to the following email lists"
     render 'one_click_remove'
   end
   
