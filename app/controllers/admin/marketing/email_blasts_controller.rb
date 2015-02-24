@@ -39,7 +39,8 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast.uuid = SecureRandom.uuid
     
     if @email_blast.save
-      redirect_to action: 'index', notice: 'Email Blast was successfully created.'
+      flash[:info] = 'Email Blast was successfully created.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -57,7 +58,8 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast = EmailBlast.find(params[:id])
     
     if @email_blast.update(email_blast_params)
-      redirect_to action: 'index', notice: 'Email Blast was successfully updated.'
+      flash[:info] = 'Email Blast was successfully updated.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -66,7 +68,9 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   def destroy
     @email_blast = EmailBlast.find(params[:id])
     @email_blast.destroy
-    redirect_to action: 'index', notice: 'Email Blast has been deleted.'
+    
+    flash[:info] = 'Email Blast has been deleted.'
+    redirect_to action: 'index'
   end
   
   def test

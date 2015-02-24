@@ -33,9 +33,7 @@
   <%= f.input :html %>
   <%= f.input :body, input_html: { rows: 16 } %>
   
-  <div class="form-actions">
-  	<%= f.button :submit %>
-  </div>
+  <%= f.button :submit %>
   
 <% end %>
 </div>
@@ -72,11 +70,6 @@
 <% content_for :title do %>
     Email Lists: <%= @email_blast.title %>
 <% end %>
-
-
-<% content_for :menu do
-    render "admin/shared/marketing_menu"
-end %>
 
 
 <% content_for :breadcrumbs do %>
