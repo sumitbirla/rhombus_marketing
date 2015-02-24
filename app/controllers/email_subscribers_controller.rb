@@ -11,6 +11,9 @@ class EmailSubscribersController < ApplicationController
         uuid: SecureRandom.uuid
       })
       res = @email_subscriber.save 
+    elsif @email_subscriber.inactive?
+      # if email exists in db but is marked as opted_out, reported_spam or bounced, reset it
+      @email_subscriber.update(opted_out: false, reported_spam: false, bounces: 0)
     end
     
     if res 
@@ -19,13 +22,12 @@ class EmailSubscribersController < ApplicationController
           EmailSubscription.create(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
         end
       end
-      flash[:info] = "You are now subscribed to the following email lists"
+      redirect_to params[:redirect]
     else
       flash[:error] = "The email you entered is not valid."
-      @error = true
+      render "shared/error_page"
     end
-    
-    render 'one_click_remove'
+  
   end
   
   def one_click_remove

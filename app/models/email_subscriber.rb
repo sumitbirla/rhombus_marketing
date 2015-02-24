@@ -26,4 +26,8 @@ class EmailSubscriber < ActiveRecord::Base
   validates_presence_of :email, :uuid
   validates_uniqueness_of :email, message: " is already subscribed."
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  
+  def inactive?
+    opted_out || reported_spam || bounces > 2
+  end
 end
