@@ -13,7 +13,8 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
     @affiliate_campaign = AffiliateCampaign.new(affiliate_campaign_params)
     
     if @affiliate_campaign.save
-      redirect_to action: 'index', notice: 'Affiliate Campaign was successfully created.'
+      flash[:success] = 'Affiliate Campaign was successfully created.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -32,7 +33,9 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
     
     if @affiliate_campaign.update(affiliate_campaign_params)
       Rails.cache.delete @affiliate_campaign
-      redirect_to action: 'index', notice: 'Affiliate Campaign was successfully updated.'
+      
+      flash[:success] = 'Affiliate Campaign was successfully updated.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -43,15 +46,15 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
     Rails.cache.delete @affiliate_campaign
     @affiliate_campaign.destroy
     
-    redirect_to action: 'index', notice: 'Affiliate Campaign has been deleted.'
+    flash[:success] = 'Affiliate Campaign has been deleted.'
+    redirect_to action: 'index'
   end
   
   
   private
   
     def affiliate_campaign_params
-      params.require(:affiliate_campaign).permit(:affiliate_id, :name, :destination_url, :signup_commission, :sale_commission, 
-      :start_date, :end_date, :record_history, :raw_clicks, :unique_clicks, :signups, :orders)
+      params.require(:affiliate_campaign).permit!
     end
   
 end

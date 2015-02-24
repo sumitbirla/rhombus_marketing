@@ -39,7 +39,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast.uuid = SecureRandom.uuid
     
     if @email_blast.save
-      flash[:info] = 'Email Blast was successfully created.'
+      flash[:success] = 'Email Blast was successfully created.'
       redirect_to action: 'index'
     else
       render 'edit'
@@ -58,7 +58,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast = EmailBlast.find(params[:id])
     
     if @email_blast.update(email_blast_params)
-      flash[:info] = 'Email Blast was successfully updated.'
+      flash[:success] = 'Email Blast was successfully updated.'
       redirect_to action: 'index'
     else
       render 'edit'
@@ -69,7 +69,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blast = EmailBlast.find(params[:id])
     @email_blast.destroy
     
-    flash[:info] = 'Email Blast has been deleted.'
+    flash[:success] = 'Email Blast has been deleted.'
     redirect_to action: 'index'
   end
   
@@ -96,7 +96,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     })
     test_blast.save
     
-    flash[:info] = "Test email blast has been dispatched"
+    flash[:success] = "Test email blast has been dispatched"
     redirect_to :back
   end
   

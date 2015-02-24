@@ -13,7 +13,8 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
     @email_list = EmailList.new(email_list_params)
     
     if @email_list.save
-      redirect_to action: 'index', notice: 'Email List was successfully created.'
+      flash[:success] = 'Email List was successfully created.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -31,7 +32,8 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
     @email_list = EmailList.find(params[:id])
     
     if @email_list.update(email_list_params)
-      redirect_to action: 'index', notice: 'Email List was successfully updated.'
+      flash[:success] = 'Email List was successfully updated.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -40,14 +42,16 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
   def destroy
     @email_list = EmailList.find(params[:id])
     @email_list.destroy
-    redirect_to action: 'index', notice: 'Email List has been deleted.'
+    
+    flash[:success] = 'Email List has been deleted.'
+    redirect_to action: 'index'
   end
   
   
   private
   
     def email_list_params
-      params.require(:email_list).permit(:name, :auto_subscribe, :user_managable, :description)
+      params.require(:email_list).permit!
     end
   
 end

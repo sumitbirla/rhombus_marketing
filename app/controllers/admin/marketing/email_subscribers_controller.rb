@@ -34,7 +34,8 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
         end
       end
       
-      redirect_to action: 'index', notice: 'Email Subscriber was successfully created.'
+      flash[:success] = 'Email Subscriber was successfully created.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -70,7 +71,8 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
         end
       end
       
-      redirect_to action: 'index', notice: 'Email Subscriber was successfully updated.'
+      flash[:success] = 'Email Subscriber was successfully updated.'
+      redirect_to action: 'index'
     else
       render 'edit'
     end
@@ -79,7 +81,9 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   def destroy
     @email_subscriber = EmailSubscriber.find(params[:id])
     @email_subscriber.destroy
-    redirect_to action: 'index', notice: 'Email Subscriber has been deleted.'
+    
+    flash[:success] = 'Email Subscriber has been deleted.'
+    redirect_to action: 'index'
   end
   
   
