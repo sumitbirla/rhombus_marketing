@@ -19,4 +19,8 @@ class EmailList < ActiveRecord::Base
   has_many :email_subscribers, through: :email_subscriptions
   
   validates_presence_of :name
+  
+  def to_s
+    name
+  end
 end

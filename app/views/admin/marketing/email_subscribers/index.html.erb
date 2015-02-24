@@ -22,7 +22,7 @@
 		<td><%= tick subscriber.opted_out %></td>
 		<td><%= tick subscriber.reported_spam %></td>
 		<td><%= subscriber.bounces %></td>
-		<td><%= systime subscriber.created_at %></td>
+		<td class="light"><%= systime subscriber.created_at %></td>
 		<td>
 			<%= link_to "edit", edit_admin_marketing_email_subscriber_path(subscriber) %> &nbsp;
 			<%= link_to "delete", 

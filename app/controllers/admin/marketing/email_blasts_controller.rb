@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailBlastsController < Admin::BaseController
   
   def index
-    @email_blasts = EmailBlast.where(test: false).order(scheduled_time: :desc).page(params[:page])
+    @email_blasts = EmailBlast.where(test: false).includes(:email_list).order(scheduled_time: :desc).page(params[:page])
   end
 
   def new
