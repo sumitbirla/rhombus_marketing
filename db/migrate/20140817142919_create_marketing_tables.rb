@@ -63,7 +63,7 @@ class CreateMarketingTables < ActiveRecord::Migration
     create_table "mktg_email_subscribers", force: true do |t|
       t.string   "email",                                 null: false
       t.string   "name"
-      t.string   "ip_address",                            null: false
+      t.string   "ip_address", 
       t.integer  "affiliate_campaign_id"
       t.integer  "referred_by"
       t.integer  "bounces",               default: 0
