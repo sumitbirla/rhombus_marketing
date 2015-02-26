@@ -11,18 +11,18 @@
 <table class="table table-striped table-condensed">
 	<tr>
 		<th>Email</th>
-		<th>Opted-out</th>
-		<th>Reported Spam</th>
-		<th>Bounces</th>
+		<th class="calign">Opted-out</th>
+		<th class="calign">Reported Spam</th>
+		<th class="calign">Bounces</th>
 		<th>Signed up</th>
 		<th>&nbsp;</th>
 	</tr>
 	<% @email_subscribers.each do |subscriber| %>
 	<tr>
 		<td><%= link_to subscriber.email, edit_admin_marketing_email_subscriber_path(subscriber) %></td>
-		<td><%= tick subscriber.opted_out %></td>
-		<td><%= tick subscriber.reported_spam %></td>
-		<td><%= subscriber.bounces %></td>
+		<td class="calign"><%= tick subscriber.opted_out %></td>
+		<td class="calign"><%= tick subscriber.reported_spam %></td>
+		<td class="calign"><%= subscriber.bounces %></td>
 		<td class="light"><%= systime subscriber.created_at %></td>
 		<td>
 			<%= link_to "edit", edit_admin_marketing_email_subscriber_path(subscriber) %> &nbsp;

@@ -8,20 +8,24 @@
 	<tr>
 		<th>ID</th>
 		<th>Name</th>
-		<th>Subcribers</th>
-		<th>Blasts</th>
-		<th>Auto Subscribe</th>
-		<th>User Managable</th>
+    <th>Last Dispatch</th>
+		<th class="calign">Subcribers</th>
+		<th class="calign">Blasts</th>
+		<th class="calign">Auto Subscribe</th>
+		<th class="calign">User Managable</th>
 		<th>&nbsp;</th>
 	</tr>
-	<% @email_lists.each do |list| %>
+	<% @email_lists.each do |list| 
+  last_dispatch = EmailBlast.where(email_list_id: list.id, test: false).order(dispatch_time: :desc).first
+  %>
 	<tr>
 		<td><%= list.id %></td>
 		<td><%= link_to list.name, edit_admin_marketing_email_list_path(list) %></td>
-		<td><%= list.email_subscribers.length %></td>
-		<td><%= list.email_blasts.length %></td>
-		<td><%= tick list.auto_subscribe %></td>
-		<td><%= tick list.user_managable %></td>
+    <td class="light"><%= last_dispatch ? systime(last_dispatch.dispatch_time) : "- never -"%></td>
+		<td class="calign"><%= number_with_delimiter(list.email_subscribers.count, delimiter: ",") %></td>
+		<td class="calign"><%= list.email_blasts.length %></td>
+		<td class="calign"><%= tick list.auto_subscribe %></td>
+		<td class="calign"><%= tick list.user_managable %></td>
 		<td>
 			<%= link_to "edit", edit_admin_marketing_email_list_path(list) %> &nbsp;
 			<%= link_to "delete", 
