@@ -20,7 +20,7 @@
   %>
 	<tr>
 		<td><%= list.id %></td>
-		<td><%= link_to list.name, edit_admin_marketing_email_list_path(list) %></td>
+		<td><%= link_to list.name, admin_marketing_email_subscribers_path(email_list_id: list.id) %></td>
     <td class="light"><%= last_dispatch ? systime(last_dispatch.dispatch_time) : "- never -"%></td>
 		<td class="calign"><%= number_with_delimiter(list.email_subscribers.count, delimiter: ",") %></td>
 		<td class="calign"><%= list.email_blasts.length %></td>
