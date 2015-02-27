@@ -1,7 +1,18 @@
 <h2>
-	<%= link_to "new subscriber", new_admin_marketing_email_subscriber_path, class: 'btn btn-sm btn-default pull-right'%>
+  <div class="pull-right">
+  	<form style="display: inline-block; margin-right: 20px;" action="" method="get" id="list-form">
+  		<select name="email_list_id">
+        <option value="">All lists</option>
+  		  <%= options_from_collection_for_select(EmailList.order(:name), :id, :name, params[:email_list_id]) %>
+  		</select>
+  	</form>
+  	<%= link_to new_admin_marketing_email_subscriber_path, class: 'btn btn-sm btn-default' do %>
+      <i class="fa fa-plus"></i> new subscriber
+    <% end %>
+  </div>
 	Email Subscribers
 </h2>
+
 
 <% unless params[:q].nil? %>
     <div class="alert alert-info">Found <%= @email_subscribers.total_entries %> records matching '<%= params[:q] %>'</div>
@@ -35,9 +46,23 @@
 	<% end %>
 </table>
 
+<div class="table-summary">
+	<%= number_with_delimiter(@email_subscribers.total_entries) %> records | <%= link_to 'CSV', admin_marketing_email_subscribers_path(format: :csv, email_list_id: params[:email_list_id], q: params[:q]) %>
+</div>
+
 
 <% content_for :title do %>
     Email Subscribers
+<% end %>
+
+<% content_for :head do %>
+    <script>
+      $(document).ready(function() {
+        $('#list-form select').change(function() {
+         	$("#list-form").submit();
+        });	
+      });
+    </script>
 <% end %>
 
 <% content_for :menu do

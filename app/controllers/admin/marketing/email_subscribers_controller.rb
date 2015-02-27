@@ -1,8 +1,14 @@
 class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   
   def index
-    @email_subscribers = EmailSubscriber.page(params[:page]).order('created_at DESC')
+    @email_subscribers = EmailSubscriber.order('created_at DESC')
+    @email_subscribers = @email_subscribers.where(id: EmailSubscription.select("email_subscriber_id").where(email_list_id: params[:email_list_id])) unless params[:email_list_id].blank?
     @email_subscribers = @email_subscribers.where("email LIKE '%#{params[:q]}%'") unless params[:q].nil?
+    
+    respond_to do |format|
+      format.html { @email_subscribers = @email_subscribers.page(params[:page]) }
+      format.csv { send_data @email_subscribers.to_csv }
+    end
   end
 
   def new
