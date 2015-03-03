@@ -16,7 +16,7 @@
 		<th>&nbsp;</th>
 	</tr>
 	<% @email_lists.each do |list| 
-  last_dispatch = EmailBlast.where(email_list_id: list.id, test: false).order(dispatch_time: :desc).first
+  last_dispatch = EmailBlast.where(email_list_id: list.id, test: false).where("dispatch_time IS NOT NULL").order(dispatch_time: :desc).first
   %>
 	<tr>
 		<td><%= list.id %></td>
