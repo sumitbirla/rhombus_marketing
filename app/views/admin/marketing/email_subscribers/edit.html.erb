@@ -4,6 +4,11 @@
 </style>
 
 <h2><%= @email_subscriber.email %></h2>
+<% unless @email_subscriber.last_error.blank? %>
+<div class="bs-callout bs-callout-danger">
+  <pre><%= @email_subscriber.last_error %></pre>
+</div>
+<% end %>
 <hr/>
 
 <%= simple_form_for([:admin, :marketing, @email_subscriber], html: { class: 'form-inline' }) do |f| %>

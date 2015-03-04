@@ -26,6 +26,7 @@
 		<th class="calign">Reported Spam</th>
 		<th class="calign">Bounces</th>
 		<th>Signed up</th>
+    <th>Last Seen</th>
 		<th>&nbsp;</th>
 	</tr>
 	<% @email_subscribers.each do |subscriber| %>
@@ -35,6 +36,7 @@
 		<td class="calign"><%= tick subscriber.reported_spam %></td>
 		<td class="calign"><%= subscriber.bounces %></td>
 		<td class="light"><%= systime subscriber.created_at %></td>
+    <td class="light"><%= subscriber.last_seen.nil? ? "-" : systime(subscriber.last_seen) %></td>
 		<td>
 			<%= link_to "edit", edit_admin_marketing_email_subscriber_path(subscriber) %> &nbsp;
 			<%= link_to "delete", 
