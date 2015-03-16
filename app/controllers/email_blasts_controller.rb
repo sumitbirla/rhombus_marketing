@@ -15,7 +15,11 @@ class EmailBlastsController < ApplicationController
   # when an email is viewed, there is an embedded transarent image
   # <img src="<%= web_url %>/image/pixel?guid=[GUID]" alt=""/>
   def pixel
-    ActiveRecord::Base.connection.execute("UPDATE mktg_email_blasts SET opens=opens+1 WHERE uuid='#{params[:uuid]}'")
+    if params[:uuid]
+      ActiveRecord::Base.connection.execute("UPDATE mktg_email_blasts SET opens=opens+1 WHERE uuid='#{params[:uuid]}'")
+    elsif params[:acid]
+      ActiveRecord::Base.connection.execute("UPDATE mktg_affiliate_campaigns SET opens=opens+1 WHERE id='#{params[:acid]}'")
+    end
     send_file Rails.root.join('public', 'pixel.gif')
   end
 end
