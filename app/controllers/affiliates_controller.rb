@@ -6,10 +6,10 @@ class AffiliatesController < ApplicationController
     
     unless aff.nil?
       if cookies[:acid].blank? || cookies[:acid] != params[:id]
-        sql = "UPDATE mktg_affiliate_campaigns SET raw_clicks=raw_clicks+1 AND unique_clicks=unique_clicks+1 WHERE ID=#{params[:id]}"
+        sql = "UPDATE mktg_affiliate_campaigns SET raw_clicks=raw_clicks+1 AND unique_clicks=unique_clicks+1 WHERE id=#{params[:id]}"
         cookies[:acid] = params[:id]
       else
-        sql = "UPDATE mktg_affiliate_campaigns SET raw_clicks=raw_clicks+1 WHERE ID=#{params[:id]}"
+        sql = "UPDATE mktg_affiliate_campaigns SET raw_clicks=raw_clicks+1 WHERE id=#{params[:id]}"
       end
       ActiveRecord::Base.connection.execute(sql)
     end
