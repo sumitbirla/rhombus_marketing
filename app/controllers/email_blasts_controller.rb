@@ -18,7 +18,7 @@ class EmailBlastsController < ApplicationController
     if params[:uuid]
       ActiveRecord::Base.connection.execute("UPDATE mktg_email_blasts SET opens=opens+1 WHERE uuid='#{params[:uuid]}'")
     elsif params[:acid]
-      ActiveRecord::Base.connection.execute("UPDATE mktg_affiliate_campaigns SET opens=opens+1 WHERE id='#{params[:acid]}'")
+      ActiveRecord::Base.connection.execute("UPDATE mktg_affiliate_campaigns SET opens=opens+1 WHERE id=#{params[:acid]}")
     end
     send_file Rails.root.join('public', 'pixel.gif')
   end
