@@ -35,4 +35,8 @@ class AffiliateCampaign < ActiveRecord::Base
     "affiliate-campaign:#{id}"
   end
   
+  def active?
+    (start_date < DateTime.now) && (end_date > DateTime.now)
+  end
+  
 end
