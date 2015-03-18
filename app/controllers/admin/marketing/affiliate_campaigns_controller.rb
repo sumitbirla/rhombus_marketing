@@ -1,7 +1,7 @@
 class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
   
   def index
-    @affiliate_campaigns = AffiliateCampaign.page(params[:page]).order('start_date DESC')
+    @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).page(params[:page]).order(start_date: :desc)
   end
 
   def new
