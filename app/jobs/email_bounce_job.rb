@@ -14,7 +14,8 @@ class EmailBounceJob < ActiveJob::Base
     @dry_run = false
     
     begin
-      Net::POP3.start('127.0.0.1', 110, 'deals', 'deals321user') do |pop|
+      Net::POP3.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
+      Net::POP3.start('pinto.tampahost.net', 995, 'deals', 'deals321user') do |pop|
 
         pop.each_mail do |mail|
           msg = Mail.new(mail.pop)
