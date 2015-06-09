@@ -1,4 +1,7 @@
 class AffiliatesController < ApplicationController
+  include SimpleCaptcha::ControllerHelpers
+  
+  layout "single_column"
   
   # GET /aff/<id>?dest=xxx
   def capture
@@ -38,6 +41,32 @@ class AffiliatesController < ApplicationController
   
   # GET /fbref/<key>?ddid=xxx&dest=xxx
   def facebook_referral
-    
   end
+  
+  
+  def new
+    @affiliate = Affiliate.new
+  end
+  
+  def create
+    @affiliate = Affiliate.new(affiliate_params)
+    @affiliate.slug = SecureRandom.uuid
+    
+    if @affiliate.save
+      redirect_to show: 'index', id: @affiliate.id
+    else
+      render 'new'
+    end
+  end
+  
+  def show
+    @affiliate = Affiliate.find(params[:id])
+  end
+  
+  private
+  
+    def affiliate_params
+      params.require(:affiliate).permit!
+    end
+  
 end

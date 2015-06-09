@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   resources :email_subscribers
+  resources :affiliates
   
   get "/aff/:id" => "affiliates#capture"
   get "/ref/:key" => "affiliates#referral"
