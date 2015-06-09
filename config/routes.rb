@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   
   namespace :account do
     resources :email_subscriptions
+    resources :affiliate_campaigns
   end
   
   namespace :admin do   
