@@ -1,5 +1,4 @@
 class AffiliatesController < ApplicationController
-  include SimpleCaptcha::ControllerHelpers
   
   layout "single_column"
   
@@ -50,17 +49,49 @@ class AffiliatesController < ApplicationController
   
   def create
     @affiliate = Affiliate.new(affiliate_params)
-    @affiliate.slug = SecureRandom.uuid
     
-    if @affiliate.save
-      redirect_to show: 'index', id: @affiliate.id
-    else
-      render 'new'
+    unless verify_recaptcha(:model => @affiliate, :message => "Oh! It's error with reCAPTCHA!")
+      return render "new"
     end
+    
+    unless @affiliate.valid? @affiliate.valid_password?
+      return render "new"
+    end
+      
+    # check if email is already in database
+    user = User.find_by(email: @affiliate.email, domain_id: Rails.configuration.domain_id)
+    unless user.nil?
+      @affiliate.errors.add(:email, "already exists in our system.")
+      return render 'new'
+    end
+    
+    @affiliate.slug = SecureRandom.uuid
+    if @affiliate.save(validate: false)
+      user = User.new({
+        name: @affiliate.name,
+        email: @affiliate.email,
+        domain_id: Rails.configuration.domain_id,
+        role_id: Rails.configuration.domain_id,
+        password_digest: BCrypt::Password.create(@affiliate.password),
+        referral_key: SecureRandom.hex(5),
+        affiliate_id: @affiliate.id
+        })
+
+      if user.save
+        session[:user_id] = user.id
+        user.record_login(request, 'web')
+        UserMailer.welcome_email(user).deliver_later
+        
+        return redirect_to action: 'show', id: @affiliate.id 
+      end
+    end
+    
+    render 'new'
   end
   
   def show
-    @affiliate = Affiliate.find(params[:id])
+    @user = User.find(session[:user_id])
+    @affiliate = Affiliate.find(params[:id]) #if @user.affiliate_id == params[:id]
   end
   
   private
