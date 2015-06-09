@@ -76,6 +76,14 @@ class AffiliatesController < ApplicationController
         referral_key: SecureRandom.hex(5),
         affiliate_id: @affiliate.id
         })
+        
+      AffiliateCampaign.create(
+        affiliate_id: @affiliate.id,
+        name: "First Campaign",
+        destination_url: "/",
+        start_date: DateTime.now,
+        end_date: DateTime.now + 1.year
+      )
 
       if user.save
         session[:user_id] = user.id
