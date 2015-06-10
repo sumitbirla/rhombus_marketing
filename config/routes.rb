@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   namespace :account do
     resources :email_subscriptions
     resources :affiliate_campaigns
+    get 'affiliate/show'
+    get 'affiliate/edit'
+    patch 'affiliate/edit' => 'affiliate#update'
   end
   
   namespace :admin do   
