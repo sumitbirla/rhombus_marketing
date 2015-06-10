@@ -24,7 +24,7 @@ class Account::AffiliateController < Account::BaseController
   
     def affiliate_params
       params.require(:affiliate).permit(:name, :street1, :street2, :city, :state, :zip, :country, 
-      :contact_person, :phone, :fax, :website, :tax_id)
+      :contact_person, :email, :phone, :fax, :website, :tax_id)
     end
   
 end
