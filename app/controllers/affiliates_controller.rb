@@ -71,7 +71,7 @@ class AffiliatesController < ApplicationController
         name: @affiliate.name,
         email: @affiliate.email,
         domain_id: Rails.configuration.domain_id,
-        role_id: Rails.configuration.domain_id,
+        role_id: Role.find_by(default: true).id,
         password_digest: BCrypt::Password.create(@affiliate.password),
         referral_key: SecureRandom.hex(5),
         affiliate_id: @affiliate.id
