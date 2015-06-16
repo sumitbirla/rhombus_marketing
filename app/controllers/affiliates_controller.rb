@@ -16,12 +16,23 @@ class AffiliatesController < ApplicationController
       ActiveRecord::Base.connection.execute(sql)
     end
     
-    return redirect_to params[:dest] unless params[:dest].blank?
+    # pass on any utm_ tracking parameters to the redirect
+    filtered_params = []
+    params.each do |k, v| 
+      filtered_params << "#{k}=#{v}" if k.start_with?("utm_")
+    end
+    str = filtered_params.join("&")
     
+    # destination specified in the URL
+    unless params[:dest].blank?
+      return redirect_to params[:dest] + "?" + str 
+    end
+    
+    # destination specified in the campaign
     if aff && !aff.destination_url.blank?
-      redirect_to aff.destination_url
+      redirect_to aff.destination_url + "?" + str
     else
-      redirect_to root_path
+      redirect_to root_path + "?" + str
     end
   end
   
