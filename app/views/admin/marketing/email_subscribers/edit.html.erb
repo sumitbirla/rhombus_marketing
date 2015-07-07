@@ -1,5 +1,5 @@
 <style>
-    .form-inline .control-label { width: 90px; }
+    .form-horizontal .control-label { width: 90px; }
     ul { list-style-type: none; }
 </style>
 
@@ -11,7 +11,7 @@
 <% end %>
 <hr/>
 
-<%= simple_form_for([:admin, :marketing, @email_subscriber], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_subscriber], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
 
 <div class="col-md-7">
 <% unless @email_subscriber.id.nil? %>
@@ -59,9 +59,7 @@
   <%= f.input :data1 %>
   <%= f.input :data2 %>
   
-  <div class="form-actions">
-  	<%= f.button :submit %>
-  </div>
+  	
   
 </div>
 
@@ -80,6 +78,10 @@
         </ul>
     </div>
   </div>
+</div>
+
+<div class="col-md-12">
+  <%= f.button :submit %>
 </div>
 
 <% end %>

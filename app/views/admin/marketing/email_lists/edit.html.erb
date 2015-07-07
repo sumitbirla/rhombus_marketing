@@ -1,22 +1,21 @@
 <style>
-    .form-inline .control-label { width: 120px; }
+    .form-horizontal .control-label { width: 120px; }
 </style>
 
 <h2><%= @email_list.name %></h2>
 <hr/>
 
-<%= simple_form_for([:admin, :marketing, @email_list], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_list], html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
 
   <%= f.input :name %>
   <%= f.input :auto_subscribe %>
   <%= f.input :user_managable %>
-  <%= f.input :description, as: :text, input_html: { class: 'span5', rows: 3 } %>
+  <%= f.input :description, as: :text, input_html: { rows: 4 } %>
   
-  <div class="form-actions">
-  	<%= f.button :submit %>
-  </div>
+  <%= f.button :submit %>
+
 <% end %>
 
 
@@ -24,9 +23,6 @@
     Email Lists: <%= @email_list.name %>
 <% end %>
 
-<% content_for :menu do
-    render "admin/shared/marketing_menu"
-end %>
 
 
 <% content_for :breadcrumbs do %>

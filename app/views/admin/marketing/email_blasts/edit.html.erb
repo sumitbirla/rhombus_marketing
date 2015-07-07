@@ -1,6 +1,5 @@
 <style>
-.form-inline { width: 100%; }
-    .form-inline .control-label { width: 120px; }
+  .form-horizontal .control-label { width: 120px; }
 </style>
 
 <% if @email_blast.persisted? %>
@@ -17,11 +16,11 @@
 <hr/>
 
 <div class="col-md-10">
-<%= simple_form_for([:admin, :marketing, @email_blast], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_blast], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
   
   <%= f.input :title, input_html: { class: 'span5'} %>
   <%= f.input :approved %>
-  <%= f.input :scheduled_time %>
+  <%= f.input :scheduled_time, as: :string, input_html: { class: "datetime-field" } %>
   <%= f.association :email_list %>
   <%= f.association :voucher_group %>
   <hr/>
