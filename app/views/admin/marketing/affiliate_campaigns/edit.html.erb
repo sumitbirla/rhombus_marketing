@@ -1,11 +1,11 @@
 <style>
-    .form-inline .control-label { width: 140px; }
+    .form-horizontal .control-label { width: 140px; }
 </style>
 
 <h2><%= @affiliate_campaign.name %></h2>
 <hr/>
 
-<%= simple_form_for([:admin, :marketing, @affiliate_campaign], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :marketing, @affiliate_campaign], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
 
@@ -14,8 +14,8 @@
   <%= f.input :destination_url %>
   <%= f.input :signup_commission %>
   <%= f.input :sale_commission %>
-  <%= f.input :start_date %>
-  <%= f.input :end_date %>
+  <%= f.input :start_date, as: :datetimepicker %>
+  <%= f.input :end_date, as: :datetimepicker %>
   <%= f.input :record_history %>
   <%= f.input :opens %>
   <%= f.input :raw_clicks %>

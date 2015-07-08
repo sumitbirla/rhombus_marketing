@@ -20,7 +20,7 @@
   
   <%= f.input :title, input_html: { class: 'span5'} %>
   <%= f.input :approved %>
-  <%= f.input :scheduled_time, as: :string, input_html: { class: "datetime-field" } %>
+  <%= f.input :scheduled_time, as: :datetimepicker %>
   <%= f.association :email_list %>
   <%= f.association :voucher_group %>
   <hr/>
