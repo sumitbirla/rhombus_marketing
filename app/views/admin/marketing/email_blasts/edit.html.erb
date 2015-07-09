@@ -1,7 +1,3 @@
-<style>
-  .form-horizontal .control-label { width: 120px; }
-</style>
-
 <% if @email_blast.persisted? %>
   <%= link_to test_admin_marketing_email_blast_path(@email_blast), class: 'btn btn-sm btn-default pull-right' do %>
     <i class="fa fa-arrow-circle-right"></i> Test Dispatch
