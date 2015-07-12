@@ -12,7 +12,7 @@
 <hr/>
 
 <div class="col-md-10">
-<%= simple_form_for [:admin, :marketing, @email_blast], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_blast] do |f| %>
   
   <%= f.input :title, input_html: { class: 'span5'} %>
   <%= f.input :approved %>

@@ -11,7 +11,7 @@
 <% end %>
 <hr/>
 
-<%= simple_form_for [:admin, :marketing, @email_subscriber], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_subscriber] do |f| %>
 
 <div class="col-md-7">
 <% unless @email_subscriber.id.nil? %>

@@ -85,7 +85,8 @@ class AffiliatesController < ApplicationController
         role_id: Role.find_by(default: true).id,
         password_digest: BCrypt::Password.create(@affiliate.password),
         referral_key: SecureRandom.hex(5),
-        affiliate_id: @affiliate.id
+        affiliate_id: @affiliate.id,
+        status: :active
         })
         
       AffiliateCampaign.create(

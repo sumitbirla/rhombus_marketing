@@ -1,7 +1,7 @@
 <h2><%= @email_list.name %></h2>
 <hr/>
 
-<%= simple_form_for [:admin, :marketing, @email_list], html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_list]  do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
 
