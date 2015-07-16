@@ -1,32 +1,32 @@
 # == Schema Information
 #
-# Table name: email_blasts
+# Table name: mktg_email_blasts
 #
 #  id               :integer          not null, primary key
 #  scheduled_time   :datetime         not null
 #  email_list_id    :integer          not null
-#  sent             :integer          not null
-#  opens            :integer          not null
-#  bounces          :integer          not null
-#  clicks           :integer          not null
-#  sales            :integer          not null
-#  key              :string(255)      not null
+#  test             :boolean          default(FALSE), not null
+#  sent             :integer          default(0), not null
+#  opens            :integer          default(0), not null
+#  bounces          :integer          default(0), not null
+#  clicks           :integer          default(0), not null
+#  sales            :integer          default(0), not null
+#  uuid             :string(255)      not null
 #  title            :string(255)      not null
 #  from_name        :string(255)      not null
 #  from_email       :string(255)      not null
 #  subject          :string(255)      not null
-#  body             :text
+#  body             :text(65535)
 #  voucher_group_id :integer
-#  approved         :boolean          not null
-#  test             :boolean          not null
-#  dispatched       :boolean          not null
+#  approved         :boolean          default(FALSE), not null
+#  dispatched       :boolean          default(FALSE), not null
 #  dispatch_time    :datetime
 #  html             :boolean          not null
 #  html_body_url    :string(255)
 #  text_body_url    :string(255)
+#  last_error       :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
-#  last_error       :string(255)
 #
 
 class EmailBlast < ActiveRecord::Base

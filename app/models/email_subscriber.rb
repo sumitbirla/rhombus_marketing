@@ -1,20 +1,23 @@
 # == Schema Information
 #
-# Table name: email_subscribers
+# Table name: mktg_email_subscribers
 #
 #  id                    :integer          not null, primary key
+#  uuid                  :string(255)      not null
 #  email                 :string(255)      not null
 #  name                  :string(255)
-#  ip_address            :string(255)      not null
+#  ip_address            :string(255)      default("")
 #  affiliate_campaign_id :integer
 #  referred_by           :integer
 #  bounces               :integer          default(0)
 #  reported_spam         :boolean          default(FALSE)
 #  opted_out             :boolean          default(FALSE)
-#  created_at            :datetime
-#  updated_at            :datetime
 #  data1                 :string(255)
 #  data2                 :string(255)
+#  last_seen             :datetime
+#  last_error            :text(65535)
+#  created_at            :datetime
+#  updated_at            :datetime
 #
 
 class EmailSubscriber < ActiveRecord::Base

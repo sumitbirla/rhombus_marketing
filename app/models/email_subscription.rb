@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: email_subscriptions
+# Table name: mktg_email_subscriptions
 #
 #  id                  :integer          not null, primary key
 #  email_subscriber_id :integer          not null

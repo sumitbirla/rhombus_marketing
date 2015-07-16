@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: email_lists
+# Table name: mktg_email_lists
 #
 #  id             :integer          not null, primary key
 #  name           :string(255)      not null
-#  auto_subscribe :boolean          not null
-#  user_managable :boolean          not null
-#  description    :text
+#  auto_subscribe :boolean          default(FALSE), not null
+#  user_managable :boolean          default(FALSE), not null
+#  description    :text(65535)
 #  created_at     :datetime
 #  updated_at     :datetime
 #
