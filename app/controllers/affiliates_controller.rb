@@ -100,7 +100,7 @@ class AffiliatesController < ApplicationController
       if user.save
         session[:user_id] = user.id
         user.record_login(request, 'web')
-        UserMailer.welcome_email(user).deliver_later
+        UserMailer.welcome_email(user.id).deliver_later
         
         return redirect_to action: 'show', id: @affiliate.id 
       end
