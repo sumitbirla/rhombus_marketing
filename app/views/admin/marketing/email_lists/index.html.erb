@@ -16,14 +16,14 @@
 		<th>&nbsp;</th>
 	</tr>
 	<% @email_lists.each do |list| 
-  last_dispatch = EmailBlast.where(email_list_id: list.id, test: false).where("dispatch_time IS NOT NULL").order(dispatch_time: :desc).first
+      cnt = @counts.find { |x| x[0] == list.id }
   %>
 	<tr>
 		<td><%= list.id %></td>
 		<td><%= link_to list.name, admin_marketing_email_subscribers_path(email_list_id: list.id) %></td>
-    <td class="light"><%= last_dispatch ? systime(last_dispatch.dispatch_time) : "- never -"%></td>
-		<td class="calign"><%= number_with_delimiter(list.email_subscribers.count, delimiter: ",") %></td>
-		<td class="calign"><%= list.email_blasts.length %></td>
+    <td><%= cnt[3] ? systime(cnt[3]) : "- never -"%></td>
+		<td class="calign"><%= number_with_delimiter(cnt[1], delimiter: ",") %></td>
+		<td class="calign"><%= cnt[2] %></td>
 		<td class="calign"><%= tick list.auto_subscribe %></td>
 		<td class="calign"><%= tick list.user_managable %></td>
 		<td>

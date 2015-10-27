@@ -2,6 +2,19 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
   
   def index
     @email_lists = EmailList.page(params[:page]).order('name')
+    
+    sql = <<-EOF
+      select 
+    	  e.id,
+    	  (select count(*) from mktg_email_subscriptions s where s.email_list_id = e.id),
+    	  (select count(*) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1),
+        (select max(dispatch_time) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1)
+      from mktg_email_lists e
+      where e.id in (#{@email_lists.map(&:id).join(",")});
+    EOF
+    
+    @counts = []
+    ActiveRecord::Base.connection.execute(sql).each { |row| @counts << row }
   end
 
   def new
