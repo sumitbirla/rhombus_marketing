@@ -6,17 +6,17 @@
 #  affiliate_id      :integer          not null
 #  name              :string(255)      not null
 #  destination_url   :string(255)      default(""), not null
-#  signup_commission :decimal(6, 2)    default(0.0), not null
-#  sale_commission   :decimal(6, 2)    default(20.0), not null
-#  cookie_ttl        :integer          default(45), not null
+#  signup_commission :decimal(6, 2)    default("0.00"), not null
+#  sale_commission   :decimal(6, 2)    default("20.00"), not null
+#  cookie_ttl        :integer          default("45"), not null
 #  start_date        :datetime         not null
 #  end_date          :datetime         not null
-#  record_history    :boolean          default(FALSE), not null
-#  opens             :integer          default(0), not null
-#  raw_clicks        :integer          default(0), not null
-#  unique_clicks     :integer          default(0), not null
-#  signups           :integer          default(0), not null
-#  orders            :integer          default(0), not null
+#  record_history    :boolean          default("0"), not null
+#  opens             :integer          default("0"), not null
+#  raw_clicks        :integer          default("0"), not null
+#  unique_clicks     :integer          default("0"), not null
+#  signups           :integer          default("0"), not null
+#  orders            :integer          default("0"), not null
 #  created_at        :datetime
 #  updated_at        :datetime
 #

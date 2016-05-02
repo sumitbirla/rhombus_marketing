@@ -9,9 +9,9 @@
 #  ip_address            :string(255)      default("")
 #  affiliate_campaign_id :integer
 #  referred_by           :integer
-#  bounces               :integer          default(0)
-#  reported_spam         :boolean          default(FALSE)
-#  opted_out             :boolean          default(FALSE)
+#  bounces               :integer          default("0")
+#  reported_spam         :boolean          default("0")
+#  opted_out             :boolean          default("0")
 #  data1                 :string(255)
 #  data2                 :string(255)
 #  last_seen             :datetime

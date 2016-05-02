@@ -4,8 +4,8 @@
 #
 #  id             :integer          not null, primary key
 #  name           :string(255)      not null
-#  auto_subscribe :boolean          default(FALSE), not null
-#  user_managable :boolean          default(FALSE), not null
+#  auto_subscribe :boolean          default("0"), not null
+#  user_managable :boolean          default("0"), not null
 #  description    :text(65535)
 #  created_at     :datetime
 #  updated_at     :datetime
