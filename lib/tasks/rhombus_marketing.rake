@@ -1,15 +1,9 @@
 require "net/pop"
 
-class EmailBounceJob < ActiveJob::Base
-  queue_as :default
-  
-  # reschedule job
-  after_perform do |job|
-    self.class.set(wait: 3600).perform_later
-  end
-  
-  # do the task
-  def perform(*args)
+namespace :rhombus_marketing do
+
+  desc "Read in bounced emails and unsubscribe or increment bounce counter"
+  task process_bounced_emails: :environment do
     @logger = Logger.new(Rails.root.join("log", "bounce.log"))
     @dry_run = false
     
@@ -31,7 +25,7 @@ class EmailBounceJob < ActiveJob::Base
       @logger.error e
     end
   end
-
+  
   # handle bounced emails
   def bounce(msg)
     to = msg.to.to_s
@@ -87,5 +81,5 @@ class EmailBounceJob < ActiveJob::Base
   def unsubscribe(msg)
     false
   end
-  
+
 end
