@@ -3,7 +3,7 @@ require "net/pop"
 namespace :rhombus_marketing do
 
   desc "Read in bounced emails and unsubscribe or increment bounce counter"
-  task process_bounced_emails: :environment do
+  task bounced_emails: :environment do
     @logger = Logger.new(Rails.root.join("log", "bounce.log"))
     @dry_run = false
     
