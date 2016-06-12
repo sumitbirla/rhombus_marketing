@@ -1,7 +1,12 @@
 class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
   
   def index
-    @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).page(params[:page]).order(start_date: :desc)
+    @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).order(start_date: :desc)
+    
+    respond_to do |format|
+      format.html { @affiliate_campaigns = @affiliate_campaigns.page(params[:page]) }
+      format.csv { send_data AffiliateCampaign.to_csv(@affiliate_campaigns) }
+    end
   end
 
   def new

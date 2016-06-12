@@ -12,6 +12,7 @@
 #
 
 class EmailList < ActiveRecord::Base
+  include Exportable
   self.table_name = 'mktg_email_lists'
   
   has_many :email_blasts

@@ -30,6 +30,7 @@
 #
 
 class EmailBlast < ActiveRecord::Base
+  include Exportable
   self.table_name = 'mktg_email_blasts'
   
   belongs_to :email_list

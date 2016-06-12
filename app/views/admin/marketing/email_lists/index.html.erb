@@ -38,13 +38,13 @@
 	<% end %>
 </table>
 
+<%= render 'admin/shared/table_summary', data: @email_lists %>
+
+
 <% content_for :title do %>
     Email Lists
 <% end %>
 
-<% content_for :menu do
-    render "admin/shared/marketing_menu"
-end %>
 
 <% content_for :breadcrumbs do %>
 	<li><a href="#">Marketing</a></li>

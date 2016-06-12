@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailListsController < Admin::BaseController
   
   def index
-    @email_lists = EmailList.page(params[:page]).order('name')
+    @email_lists = EmailList.order(:name)
     
     sql = <<-EOF
       select 
@@ -15,6 +15,11 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
     
     @counts = []
     ActiveRecord::Base.connection.execute(sql).each { |row| @counts << row }
+    
+    respond_to do |format|
+      format.html { @email_lists = @email_lists.page(params[:page]) }
+      format.csv { send_data EmailList.to_csv(@email_lists) }
+    end
   end
 
   def new

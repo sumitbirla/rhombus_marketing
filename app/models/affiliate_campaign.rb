@@ -22,6 +22,7 @@
 #
 
 class AffiliateCampaign < ActiveRecord::Base
+  include Exportable
   self.table_name = 'mktg_affiliate_campaigns'
   
   belongs_to :affiliate

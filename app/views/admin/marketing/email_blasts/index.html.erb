@@ -50,14 +50,13 @@
 	<% end %>
 </table>
 
+<%= render 'admin/shared/table_summary', data: @email_blasts %>
+
 
 <% content_for :title do %>
     Email Blasts
 <% end %>
 
-<% content_for :menu do
-    render "admin/shared/marketing_menu"
-end %>
 
 <% content_for :breadcrumbs do %>
 	<li><a href="#">Marketing</a></li>

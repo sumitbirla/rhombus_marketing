@@ -21,6 +21,7 @@
 #
 
 class EmailSubscriber < ActiveRecord::Base
+  include Exportable
   self.table_name = 'mktg_email_subscribers'
   
   belongs_to :affiliate_campaign
@@ -32,16 +33,6 @@ class EmailSubscriber < ActiveRecord::Base
   
   def inactive?
     opted_out || reported_spam || bounces > 2
-  end
-  
-  def self.to_csv
-    CSV.generate do |csv|
-      cols = column_names - []
-      csv << cols
-      all.each do |product|
-        csv << product.attributes.values_at(*cols)
-      end
-    end
   end
   
 end

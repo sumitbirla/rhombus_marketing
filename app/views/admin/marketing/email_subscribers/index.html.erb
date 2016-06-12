@@ -46,9 +46,7 @@
 	<% end %>
 </table>
 
-<div class="table-summary">
-	<%= number_with_delimiter(@email_subscribers.total_entries) %> records | <%= link_to 'CSV', admin_marketing_email_subscribers_path(format: :csv, email_list_id: params[:email_list_id], q: params[:q]) %>
-</div>
+<%= render 'admin/shared/table_summary', data: @email_subscribers %>
 
 
 <% content_for :title do %>

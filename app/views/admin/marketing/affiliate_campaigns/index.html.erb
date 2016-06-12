@@ -43,14 +43,13 @@
 	<% end %>
 </table>
 
+<%= render 'admin/shared/table_summary', data: @affiliate_campaigns %>
+
 
 <% content_for :title do %>
     Affiliate Campaigns
 <% end %>
 
-<% content_for :menu do
-    render "admin/shared/marketing_menu"
-end %>
 
 <% content_for :breadcrumbs do %>
 	<li><a href="#">Marketing</a></li>
