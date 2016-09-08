@@ -10,7 +10,7 @@
   <%= f.input :user_managable %>
   <%= f.input :description, as: :text, input_html: { rows: 4 } %>
   
-  <%= f.button :submit %>
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
 
 <% end %>
 
