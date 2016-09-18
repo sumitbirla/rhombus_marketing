@@ -14,39 +14,15 @@
 <%= simple_form_for [:admin, :marketing, @email_subscriber] do |f| %>
 
 <div class="col-md-7">
-<% unless @email_subscriber.id.nil? %>
-<table class="table table-bordered table-condensed summary">
-	<tr>
-		<td>Signed up:</td>
-		<td><%= @email_subscriber.created_at %></td>
-	</tr>
-	<tr>
-		<td>IP address:</td>
-		<td><%= @email_subscriber.ip_address %></td>
-	</tr>
-	<tr>
-		<td>Source:</td>
-		<td>
-			<% if @email_subscriber.affiliate_campaign_id.nil? %>
-			organic
-			<% else %>
-			<%= @email_subscriber.affiliate_campaign %>
-			<% end %>
-		</td>
-	</tr>
-	<tr>
-		<td>Referred by:</td>
-		<td>
-			<% if @email_subscriber.referred_by.nil? %>
-			n/a
-			<% else %>
-			<%= link_to @email_subscriber.referrer, admin_system_user_path(@email_subscriber.referred_by) %>
-			<% end %>
-		</td>
-	</tr>
-</table>
-<hr/>
-<% end %>
+  <% unless @email_subscriber.id.nil? %>
+  <table class="table table-bordered table-condensed summary">
+  	<%= obj_property @email_subscriber, :created_at, label: "Signed up" %>
+    <%= obj_property @email_subscriber, :ip_address, label: "IP address" %>
+    <%= obj_property(@email_subscriber, :affiliate_campaign, label: "Source", default: 'organic') %>
+    <%= obj_property(@email_subscriber, :referrer, label: "Referred by") { |x| link_to x.name, admin_system_user_path(x.id) } %>
+  </table>
+  <hr/>
+  <% end %>
 
 
   <%= render 'admin/shared/error_messages', object: f.object %>
@@ -59,8 +35,7 @@
   <%= f.input :data1 %>
   <%= f.input :data2 %>
   
-  	
-  
+
 </div>
 
 
