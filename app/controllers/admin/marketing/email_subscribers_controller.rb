@@ -6,7 +6,7 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
     @email_subscribers = @email_subscribers.where("email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     
     respond_to do |format|
-      format.html { @email_subscribers = @email_subscribers.page(params[:page]) }
+      format.html { @email_subscribers = @email_subscribers.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data EmailSubscriber.to_csv(@email_subscribers) }
     end
   end

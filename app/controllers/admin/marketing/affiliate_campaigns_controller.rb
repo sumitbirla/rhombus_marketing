@@ -4,7 +4,7 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
     @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).order(start_date: :desc)
     
     respond_to do |format|
-      format.html { @affiliate_campaigns = @affiliate_campaigns.page(params[:page]) }
+      format.html { @affiliate_campaigns = @affiliate_campaigns.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data AffiliateCampaign.to_csv(@affiliate_campaigns) }
     end
   end

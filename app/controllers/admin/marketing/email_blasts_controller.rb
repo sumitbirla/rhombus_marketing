@@ -4,7 +4,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     @email_blasts = EmailBlast.where(test: false).includes(:email_list).order(scheduled_time: :desc)
     
     respond_to do |format|
-      format.html { @email_blasts = @email_blasts.page(params[:page]) }
+      format.html { @email_blasts = @email_blasts.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data EmailBlast.to_csv(@email_blasts, skip_cols: ['body']) }
     end
   end
