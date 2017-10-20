@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailListsController < Admin::BaseController
   
   def index
-    authorize EmailList
+    authorize EmailList.new
     @email_lists = EmailList.order(:name)
     
     sql = <<-EOF

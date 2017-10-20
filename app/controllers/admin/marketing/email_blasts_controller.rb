@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailBlastsController < Admin::BaseController
   
   def index
-    authorize EmailBlast
+    authorize EmailBlast.new
     @email_blasts = EmailBlast.where(test: false).includes(:email_list).order(scheduled_time: :desc)
     
     respond_to do |format|

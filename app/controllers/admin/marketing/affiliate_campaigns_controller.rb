@@ -1,7 +1,7 @@
 class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
   
   def index
-    authorize AffiliateCampaign
+    authorize AffiliateCampaign.new
     @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).order(start_date: :desc)
     
     respond_to do |format|

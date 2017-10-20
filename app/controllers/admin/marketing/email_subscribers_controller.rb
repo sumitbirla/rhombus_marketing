@@ -1,7 +1,7 @@
 class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   
   def index
-    authorize EmailSubscriber
+    authorize EmailSubscriber.new
     
     @email_subscribers = EmailSubscriber.order(created_at: :desc)
     @email_subscribers = @email_subscribers.where(id: EmailSubscription.select("email_subscriber_id").where(email_list_id: params[:email_list_id])) unless params[:email_list_id].blank?
