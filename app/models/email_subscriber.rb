@@ -35,4 +35,8 @@ class EmailSubscriber < ActiveRecord::Base
     opted_out || reported_spam || bounces > 2
   end
   
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

@@ -24,4 +24,9 @@ class EmailList < ActiveRecord::Base
   def to_s
     name
   end
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

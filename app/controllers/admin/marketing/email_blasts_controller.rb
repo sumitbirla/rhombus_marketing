@@ -1,6 +1,7 @@
 class Admin::Marketing::EmailBlastsController < Admin::BaseController
   
   def index
+    authorize EmailBlast
     @email_blasts = EmailBlast.where(test: false).includes(:email_list).order(scheduled_time: :desc)
     
     respond_to do |format|
@@ -10,7 +11,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   end
 
   def new
-    @email_blast = EmailBlast.new title: 'New email blast'
+    @email_blast = authorize EmailBlast.new(title: 'New email blast')
     
     # copy from email and name from previous blast
     prev = EmailBlast.order(scheduled_time: :desc).first
@@ -40,7 +41,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   end
 
   def create
-    @email_blast = EmailBlast.new(email_blast_params)
+    @email_blast = authorize EmailBlast.new(email_blast_params)
     @email_blast.uuid = SecureRandom.uuid
     
     if @email_blast.save
@@ -52,15 +53,15 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   end
 
   def show
-    @email_blast = EmailBlast.find(params[:id])
+    @email_blast = authorize EmailBlast.find(params[:id])
   end
 
   def edit
-    @email_blast = EmailBlast.find(params[:id])
+    @email_blast = authorize EmailBlast.find(params[:id])
   end
 
   def update
-    @email_blast = EmailBlast.find(params[:id])
+    @email_blast = authorize EmailBlast.find(params[:id])
     
     if @email_blast.update(email_blast_params)
       flash[:success] = 'Email Blast was successfully updated.'
@@ -71,7 +72,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
   end
 
   def destroy
-    @email_blast = EmailBlast.find(params[:id])
+    @email_blast = authorize EmailBlast.find(params[:id])
     @email_blast.destroy
     
     flash[:success] = 'Email Blast has been deleted.'

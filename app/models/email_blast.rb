@@ -37,4 +37,9 @@ class EmailBlast < ActiveRecord::Base
   belongs_to :voucher_group
   
   validates_presence_of :title, :email_list_id, :from_name, :from_email, :subject
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

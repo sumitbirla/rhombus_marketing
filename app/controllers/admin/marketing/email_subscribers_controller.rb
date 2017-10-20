@@ -1,6 +1,8 @@
 class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   
   def index
+    authorize EmailSubscriber
+    
     @email_subscribers = EmailSubscriber.order(created_at: :desc)
     @email_subscribers = @email_subscribers.where(id: EmailSubscription.select("email_subscriber_id").where(email_list_id: params[:email_list_id])) unless params[:email_list_id].blank?
     @email_subscribers = @email_subscribers.where("email LIKE '%#{params[:q]}%'") unless params[:q].nil?
@@ -12,12 +14,12 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   end
 
   def new
-    @email_subscriber = EmailSubscriber.new email: 'New email', bounces: 0
+    @email_subscriber = authorize EmailSubscriber.new(email: 'New email', bounces: 0)
     render 'edit'
   end
 
   def create
-    @email_subscriber = EmailSubscriber.new(email_subscriber_params)
+    @email_subscriber = authorize EmailSubscriber.new(email_subscriber_params)
     @email_subscriber.ip_address = request.remote_ip
     @email_subscriber.uuid = SecureRandom.uuid
 
@@ -48,15 +50,15 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   end
 
   def show
-    @email_subscriber = EmailSubscriber.find(params[:id])
+    @email_subscriber = authorize EmailSubscriber.find(params[:id])
   end
 
   def edit
-    @email_subscriber = EmailSubscriber.find(params[:id])
+    @email_subscriber = authorize EmailSubscriber.find(params[:id])
   end
 
   def update
-    @email_subscriber = EmailSubscriber.find(params[:id])
+    @email_subscriber = authorize EmailSubscriber.find(params[:id])
     
     if @email_subscriber.update(email_subscriber_params)
       
@@ -85,7 +87,7 @@ class Admin::Marketing::EmailSubscribersController < Admin::BaseController
   end
 
   def destroy
-    @email_subscriber = EmailSubscriber.find(params[:id])
+    @email_subscriber = authorize EmailSubscriber.find(params[:id])
     @email_subscriber.destroy
     
     flash[:success] = 'Email Subscriber has been deleted.'

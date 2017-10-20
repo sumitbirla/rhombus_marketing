@@ -41,4 +41,9 @@ class AffiliateCampaign < ActiveRecord::Base
     (start_date < DateTime.now) && (end_date > DateTime.now)
   end
   
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
+  
 end

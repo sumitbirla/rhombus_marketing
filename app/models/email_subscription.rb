@@ -12,4 +12,9 @@ class EmailSubscription < ActiveRecord::Base
   
   belongs_to :email_subscriber
   belongs_to :email_list
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end
