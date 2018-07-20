@@ -4,18 +4,20 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
     authorize EmailList.new
     @email_lists = EmailList.order(:name)
     
-    sql = <<-EOF
-      select 
-    	  e.id,
-    	  (select count(*) from mktg_email_subscriptions s where s.email_list_id = e.id),
-    	  (select count(*) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1),
-        (select max(dispatch_time) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1)
-      from mktg_email_lists e
-      where e.id in (#{@email_lists.map(&:id).join(",")});
-    EOF
+    if @email_lists.length > 0
+      sql = <<-EOF
+        select 
+      	  e.id,
+      	  (select count(*) from mktg_email_subscriptions s where s.email_list_id = e.id),
+      	  (select count(*) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1),
+          (select max(dispatch_time) from mktg_email_blasts b where b.email_list_id = e.id and b.test = 0 and dispatched = 1)
+        from mktg_email_lists e
+        where e.id in (#{@email_lists.map(&:id).join(",")});
+      EOF
     
-    @counts = []
-    ActiveRecord::Base.connection.execute(sql).each { |row| @counts << row }
+      @counts = []
+      ActiveRecord::Base.connection.execute(sql).each { |row| @counts << row }
+    end
     
     respond_to do |format|
       format.html { @email_lists = @email_lists.paginate(page: params[:page], per_page: @per_page) }
