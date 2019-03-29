@@ -33,8 +33,14 @@ class Account::EmailSubscriptionsController < Account::BaseController
       end
     end
 
-    flash[:notice] =  'Email subscriptions were successfully updated.'
-    redirect_to :back
+    respond_to do |format|
+      format.html do
+        flash[:notice] =  'Email subscriptions were successfully updated.'
+        redirect_to :back
+      end
+      format.js { render :layout => false }
+    end
+    
   end
 
 end
