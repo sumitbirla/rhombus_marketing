@@ -1,7 +1,17 @@
 <% if @email_blast.persisted? %>
-  <%= link_to test_admin_marketing_email_blast_path(@email_blast), class: 'btn btn-sm btn-default pull-right' do %>
-    <i class="fa fa-arrow-circle-right"></i> Test Dispatch
-  <% end %>
+  <div class="pull-right">
+    
+    <% unless @email_blast.html_body_url.blank? %>
+      <%= link_to @email_blast.html_body_url, target: "_new", class: 'btn btn-sm btn-default'  do %>
+        <i class="fa fa-glasses"></i> HTML Preview
+      <% end %>
+    <% end %>
+    
+    <%= link_to test_admin_marketing_email_blast_path(@email_blast), class: 'btn btn-sm btn-default' do %>
+      <i class="fa fa-arrow-circle-right"></i> Test Dispatch
+    <% end %>
+    
+  </div>
 <% end %>
 
 <h2><%= @email_blast.title %></h2>
