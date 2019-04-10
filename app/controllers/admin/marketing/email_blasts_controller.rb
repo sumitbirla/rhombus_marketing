@@ -84,6 +84,11 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     test_blast = eb.dup
     test_list = EmailList.find_by(name: "Test Email Recipients")
     
+    if test_list.nil? || test_list.email_subscribers.count == 0
+      flash[:error] = "There are no emails in the 'Test Email Recipients' list."
+      return redirect_to :back
+    end
+    
     test_blast.assign_attributes({
       email_list_id: test_list.id,
       scheduled_time: DateTime.now,
