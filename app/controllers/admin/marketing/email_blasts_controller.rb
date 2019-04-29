@@ -86,7 +86,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     
     if test_list.nil? || test_list.email_subscribers.count == 0
       flash[:error] = "There are no emails in the 'Test Email Recipients' list."
-      return redirect_to :back
+      return redirect_back(fallback_location: admin_root_path)
     end
     
     test_blast.assign_attributes({
@@ -108,7 +108,7 @@ class Admin::Marketing::EmailBlastsController < Admin::BaseController
     test_blast.save
     
     flash[:success] = "Test email blast has been dispatched"
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
   
   
