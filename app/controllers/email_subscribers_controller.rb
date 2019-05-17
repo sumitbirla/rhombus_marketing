@@ -2,7 +2,7 @@ class EmailSubscribersController < ApplicationController
 
   def create  
     res = true
-    @email_subscriber = EmailSubscriber.find_by(email: params[:email])
+    @email_subscriber = EmailSubscriber.find_by(email: email_subscriber_params[:email])
     
     if @email_subscriber.nil?
       @email_subscriber = EmailSubscriber.new({
@@ -22,10 +22,17 @@ class EmailSubscribersController < ApplicationController
           EmailSubscription.create(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
         end
       end
-      redirect_to params[:redirect]
-    else
-      flash[:error] = "The email you entered is not valid."
-      render "shared/error_page"
+    end
+    
+    respond_to do |format|
+      format.html do
+        if params[:redirect].presence
+          redirect_to params[:redirect]
+        else
+          redirect_back(fallback: root_path)
+        end
+      end
+      format.js
     end
   
   end
