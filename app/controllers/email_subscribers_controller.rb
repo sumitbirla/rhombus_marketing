@@ -2,25 +2,13 @@ class EmailSubscribersController < ApplicationController
 
   def create  
     res = true
-    @email_subscriber = EmailSubscriber.find_by(email: email_subscriber_params[:email])
+    @email_subscriber = EmailSubscriber.find_or_initialize_by(email: email_subscriber_params[:email])
+    @email_subscriber.update_attributes(opted_out: false, reported_spam: false, bounces: 0)
+    @email_subscriber.update_attributes(ip_address: request.remote_ip, uuid: SecureRandom.uuid) unless @email_subscriber.persisted?
     
-    if @email_subscriber.nil?
-      @email_subscriber = EmailSubscriber.new({
-        email: params[:email],
-        ip_address: request.remote_ip,
-        uuid: SecureRandom.uuid
-      })
-      res = @email_subscriber.save 
-    elsif @email_subscriber.inactive?
-      # if email exists in db but is marked as opted_out, reported_spam or bounced, reset it
-      @email_subscriber.update(opted_out: false, reported_spam: false, bounces: 0)
-    end
-    
-    if res 
+    if @email_subscriber.save 
       EmailList.where(auto_subscribe: true). each do |list|
-        unless EmailSubscription.exists?(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
-          EmailSubscription.create(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
-        end
+        EmailSubscription.find_or_create_by(email_subscriber_id: @email_subscriber.id, email_list_id: list.id)
       end
     end
     
