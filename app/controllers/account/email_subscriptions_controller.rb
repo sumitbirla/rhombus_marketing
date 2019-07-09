@@ -13,7 +13,11 @@ class Account::EmailSubscriptionsController < Account::BaseController
 
 
   def create
-    @email_subscriber = EmailSubscriber.find_by(email: current_user.email)
+    @email_subscriber = EmailSubscriber.find_or_create_by(email: current_user.email) do |s|
+      s.ip_address = request.remote_ip
+      s.name = current_user.name
+      s.uuid = SecureRandom.uuid
+    end
 
     EmailList.all.each do |list|
 
