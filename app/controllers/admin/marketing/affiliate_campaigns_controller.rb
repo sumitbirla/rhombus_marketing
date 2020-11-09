@@ -1,9 +1,9 @@
 class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
-  
+
   def index
     authorize AffiliateCampaign.new
     @affiliate_campaigns = AffiliateCampaign.includes(:affiliate).order(start_date: :desc)
-    
+
     respond_to do |format|
       format.html { @affiliate_campaigns = @affiliate_campaigns.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data AffiliateCampaign.to_csv(@affiliate_campaigns) }
@@ -17,7 +17,7 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
 
   def create
     @affiliate_campaign = authorize AffiliateCampaign.new(affiliate_campaign_params)
-    
+
     if @affiliate_campaign.save
       flash[:success] = 'Affiliate Campaign was successfully created.'
       redirect_to action: 'index'
@@ -36,10 +36,10 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
 
   def update
     @affiliate_campaign = authorize AffiliateCampaign.find(params[:id])
-    
+
     if @affiliate_campaign.update(affiliate_campaign_params)
       Rails.cache.delete @affiliate_campaign
-      
+
       flash[:success] = 'Affiliate Campaign was successfully updated.'
       redirect_to action: 'index'
     else
@@ -51,16 +51,16 @@ class Admin::Marketing::AffiliateCampaignsController < Admin::BaseController
     @affiliate_campaign = authorize AffiliateCampaign.find(params[:id])
     Rails.cache.delete @affiliate_campaign
     @affiliate_campaign.destroy
-    
+
     flash[:success] = 'Affiliate Campaign has been deleted.'
     redirect_to action: 'index'
   end
-  
-  
+
+
   private
-  
-    def affiliate_campaign_params
-      params.require(:affiliate_campaign).permit!
-    end
-  
+
+  def affiliate_campaign_params
+    params.require(:affiliate_campaign).permit!
+  end
+
 end

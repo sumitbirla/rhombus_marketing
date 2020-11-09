@@ -32,12 +32,12 @@
 class EmailBlast < ActiveRecord::Base
   include Exportable
   self.table_name = 'mktg_email_blasts'
-  
+
   belongs_to :email_list
   belongs_to :voucher_group
-  
+
   validates_presence_of :title, :email_list_id, :from_name, :from_email, :subject, :scheduled_time
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy

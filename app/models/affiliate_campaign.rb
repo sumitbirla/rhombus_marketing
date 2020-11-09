@@ -24,26 +24,26 @@
 class AffiliateCampaign < ActiveRecord::Base
   include Exportable
   self.table_name = 'mktg_affiliate_campaigns'
-  
+
   belongs_to :affiliate
   validates_presence_of :affiliate_id, :name, :destination_url, :start_date, :end_date, :raw_clicks
   validates_presence_of :unique_clicks, :signups, :orders, :signup_commission, :sale_commission
-  
+
   def to_s
     name
   end
-  
+
   def cache_key
     "affiliate-campaign:#{id}"
   end
-  
+
   def active?
     (start_date < DateTime.now) && (end_date > DateTime.now)
   end
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
   end
-  
+
 end

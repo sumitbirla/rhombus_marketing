@@ -9,10 +9,10 @@
 
 class EmailSubscription < ActiveRecord::Base
   self.table_name = 'mktg_email_subscriptions'
-  
+
   belongs_to :email_subscriber
   belongs_to :email_list
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy

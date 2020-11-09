@@ -1,9 +1,9 @@
 class Admin::Marketing::EmailListsController < Admin::BaseController
-  
+
   def index
     authorize EmailList.new
     @email_lists = EmailList.order(:name)
-    
+
     if @email_lists.length > 0
       sql = <<-EOF
         select 
@@ -14,11 +14,11 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
         from mktg_email_lists e
         where e.id in (#{@email_lists.map(&:id).join(",")});
       EOF
-    
+
       @counts = []
       ActiveRecord::Base.connection.execute(sql).each { |row| @counts << row }
     end
-    
+
     respond_to do |format|
       format.html { @email_lists = @email_lists.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data EmailList.to_csv(@email_lists) }
@@ -32,7 +32,7 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
 
   def create
     @email_list = authorize EmailList.new(email_list_params)
-    
+
     if @email_list.save
       flash[:success] = 'Email List was successfully created.'
       redirect_to action: 'index'
@@ -51,7 +51,7 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
 
   def update
     @email_list = authorize EmailList.find(params[:id])
-    
+
     if @email_list.update(email_list_params)
       flash[:success] = 'Email List was successfully updated.'
       redirect_to action: 'index'
@@ -63,16 +63,16 @@ class Admin::Marketing::EmailListsController < Admin::BaseController
   def destroy
     @email_list = authorize EmailList.find(params[:id])
     @email_list.destroy
-    
+
     flash[:success] = 'Email List has been deleted.'
     redirect_to action: 'index'
   end
-  
-  
+
+
   private
-  
-    def email_list_params
-      params.require(:email_list).permit!
-    end
-  
+
+  def email_list_params
+    params.require(:email_list).permit!
+  end
+
 end

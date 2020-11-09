@@ -1,7 +1,7 @@
 <h2><%= @email_list.name %></h2>
 <hr/>
 
-<%= simple_form_for [:admin, :marketing, @email_list]  do |f| %>
+<%= simple_form_for [:admin, :marketing, @email_list] do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
 
@@ -9,20 +9,20 @@
   <%= f.input :auto_subscribe %>
   <%= f.input :user_managable %>
   <%= ckeditor_input(@email_list, "description") %>
-  
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
 
 <% end %>
 
 
 <% content_for :title do %>
-    Email Lists: <%= @email_list.name %>
+  Email Lists: <%= @email_list.name %>
 <% end %>
 
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">Marketing</a></li>
-	<li><%= link_to "Email Lists", admin_marketing_email_lists_path %></li>
-	<li class="active"><%= @email_list.name %></li>
+  <li><a href="#">Marketing</a></li>
+  <li><%= link_to "Email Lists", admin_marketing_email_lists_path %></li>
+  <li class="active"><%= @email_list.name %></li>
 <% end %>

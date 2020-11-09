@@ -39,12 +39,12 @@ class Account::EmailSubscriptionsController < Account::BaseController
 
     respond_to do |format|
       format.html do
-        flash[:notice] =  'Email subscriptions were successfully updated.'
+        flash[:notice] = 'Email subscriptions were successfully updated.'
         redirect_back(fallback_location: account_email_subscriptions_path)
       end
       format.js { render :layout => false }
     end
-    
+
   end
 
 end

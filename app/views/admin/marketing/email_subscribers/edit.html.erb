@@ -1,79 +1,84 @@
 <style>
-    .form-horizontal .control-label { width: 90px; }
-    ul { list-style-type: none; }
+    .form-horizontal .control-label {
+        width: 90px;
+    }
+
+    ul {
+        list-style-type: none;
+    }
 </style>
 
 <h2><%= @email_subscriber.email %></h2>
 <% unless @email_subscriber.last_error.blank? %>
-<div class="bs-callout bs-callout-danger">
-  <pre><%= @email_subscriber.last_error %></pre>
-</div>
+  <div class="bs-callout bs-callout-danger">
+    <pre><%= @email_subscriber.last_error %></pre>
+  </div>
 <% end %>
 <hr/>
 
 <%= simple_form_for [:admin, :marketing, @email_subscriber] do |f| %>
 
-<div class="col-md-7">
-  <% unless @email_subscriber.id.nil? %>
-  <table class="table table-bordered table-condensed summary">
-  	<%= obj_property @email_subscriber, :created_at, label: "Signed up" %>
-    <%= obj_property @email_subscriber, :ip_address, label: "IP address" %>
-    <%= obj_property(@email_subscriber, :affiliate_campaign, label: "Source", default: 'organic') %>
-    <%= obj_property(@email_subscriber, :referrer, label: "Referred by") { |x| link_to x.name, admin_system_user_path(x.id) } %>
-  </table>
-  <hr/>
-  <% end %>
+  <div class="col-md-7">
+    <% unless @email_subscriber.id.nil? %>
+      <table class="table table-bordered table-condensed summary">
+        <%= obj_property @email_subscriber, :created_at, label: "Signed up" %>
+        <%= obj_property @email_subscriber, :ip_address, label: "IP address" %>
+        <%= obj_property(@email_subscriber, :affiliate_campaign, label: "Source", default: 'organic') %>
+        <%= obj_property(@email_subscriber, :referrer, label: "Referred by") { |x| link_to x.name, admin_system_user_path(x.id) } %>
+      </table>
+      <hr/>
+    <% end %>
 
 
-  <%= render 'admin/shared/error_messages', object: f.object %>
+    <%= render 'admin/shared/error_messages', object: f.object %>
 
-  <%= f.input :email %>
-  <%= f.input :name %>
-  <%= f.input :opted_out %>
-  <%= f.input :reported_spam %>
-  <%= f.input :bounces %>
-  <%= f.input :data1 %>
-  <%= f.input :data2 %>
-  
-
-</div>
+    <%= f.input :email %>
+    <%= f.input :name %>
+    <%= f.input :opted_out %>
+    <%= f.input :reported_spam %>
+    <%= f.input :bounces %>
+    <%= f.input :data1 %>
+    <%= f.input :data2 %>
 
 
-<div class="col-md-5">
-  <div class="panel panel-info">
-    <div class="panel-heading">Subscriptions</div>
-	<div class="panel-body">
+  </div>
+
+
+  <div class="col-md-5">
+    <div class="panel panel-info">
+      <div class="panel-heading">Subscriptions</div>
+      <div class="panel-body">
         <ul>
-            <% EmailList.all.each do |list|
-                checked = ''
-                existing_subscription = @email_subscriber.subscriptions.find { |s| s.email_list_id == list.id }
-                checked = 'checked' unless existing_subscription.nil? %>
+          <% EmailList.all.each do |list|
+            checked = ''
+            existing_subscription = @email_subscriber.subscriptions.find { |s| s.email_list_id == list.id }
+            checked = 'checked' unless existing_subscription.nil? %>
             <li><input type="checkbox" name="list-<%= list.id %>" <%= checked %>> &nbsp; <%= list.name %></li>
-            <% end %>
+          <% end %>
         </ul>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="col-md-12">
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
-</div>
+  <div class="col-md-12">
+    <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
+  </div>
 
 <% end %>
-	
-	
+
+
 <% content_for :title do %>
-    Email Subscribers: <%= @email_subscriber.email %>
+  Email Subscribers: <%= @email_subscriber.email %>
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/marketing_menu"
+  render "admin/shared/marketing_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">Marketing</a></li>
-	<li><%= link_to "Email Subscribers", admin_marketing_email_subscribers_path %></li>
-	<li class="active"><%= @email_subscriber.email %></li>
+  <li><a href="#">Marketing</a></li>
+  <li><%= link_to "Email Subscribers", admin_marketing_email_subscribers_path %></li>
+  <li class="active"><%= @email_subscriber.email %></li>
 <% end %>
