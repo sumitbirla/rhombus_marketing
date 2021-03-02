@@ -3,21 +3,25 @@
 # Table name: mktg_email_subscribers
 #
 #  id                    :integer          not null, primary key
-#  uuid                  :string(255)      not null
-#  email                 :string(255)      not null
-#  name                  :string(255)
-#  ip_address            :string(255)      default("")
-#  affiliate_campaign_id :integer
-#  referred_by           :integer
-#  bounces               :integer          default("0")
-#  reported_spam         :boolean          default("0")
-#  opted_out             :boolean          default("0")
+#  bounces               :integer          default(0)
 #  data1                 :string(255)
 #  data2                 :string(255)
-#  last_seen             :datetime
+#  email                 :string(255)      not null
+#  ip_address            :string(255)      default("")
 #  last_error            :text(65535)
+#  last_seen             :datetime
+#  name                  :string(255)
+#  opted_out             :boolean          default(FALSE)
+#  referred_by           :integer
+#  reported_spam         :boolean          default(FALSE)
+#  uuid                  :string(255)      not null
 #  created_at            :datetime
 #  updated_at            :datetime
+#  affiliate_campaign_id :integer
+#
+# Indexes
+#
+#  index_email_subscribers_on_affiliate_campaign_id  (affiliate_campaign_id)
 #
 
 class EmailSubscriber < ActiveRecord::Base

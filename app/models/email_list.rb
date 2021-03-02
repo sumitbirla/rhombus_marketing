@@ -3,10 +3,10 @@
 # Table name: mktg_email_lists
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)      not null
-#  auto_subscribe :boolean          default("0"), not null
-#  user_managable :boolean          default("0"), not null
+#  auto_subscribe :boolean          default(FALSE), not null
 #  description    :text(65535)
+#  name           :string(255)      not null
+#  user_managable :boolean          default(FALSE), not null
 #  created_at     :datetime
 #  updated_at     :datetime
 #

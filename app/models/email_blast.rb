@@ -3,30 +3,35 @@
 # Table name: mktg_email_blasts
 #
 #  id               :integer          not null, primary key
-#  scheduled_time   :datetime         not null
-#  email_list_id    :integer          not null
-#  test             :boolean          default("0"), not null
-#  sent             :integer          default("0"), not null
-#  opens            :integer          default("0"), not null
-#  bounces          :integer          default("0"), not null
-#  clicks           :integer          default("0"), not null
-#  sales            :integer          default("0"), not null
-#  uuid             :string(255)      not null
-#  title            :string(255)      not null
-#  from_name        :string(255)      not null
-#  from_email       :string(255)      not null
-#  subject          :string(255)      not null
+#  approved         :boolean          default(FALSE), not null
 #  body             :text(65535)
-#  voucher_group_id :integer
-#  approved         :boolean          default("0"), not null
-#  dispatched       :boolean          default("0"), not null
+#  bounces          :integer          default(0), not null
+#  clicks           :integer          default(0), not null
 #  dispatch_time    :datetime
+#  dispatched       :boolean          default(FALSE), not null
+#  from_email       :string(255)      not null
+#  from_name        :string(255)      not null
 #  html             :boolean          not null
 #  html_body_url    :string(255)
-#  text_body_url    :string(255)
 #  last_error       :string(255)
+#  opens            :integer          default(0), not null
+#  sales            :integer          default(0), not null
+#  scheduled_time   :datetime         not null
+#  sent             :integer          default(0), not null
+#  subject          :string(255)      not null
+#  test             :boolean          default(FALSE), not null
+#  text_body_url    :string(255)
+#  title            :string(255)      not null
+#  uuid             :string(255)      not null
 #  created_at       :datetime
 #  updated_at       :datetime
+#  email_list_id    :integer          not null
+#  voucher_group_id :integer
+#
+# Indexes
+#
+#  index_email_blasts_on_email_list_id     (email_list_id)
+#  index_email_blasts_on_voucher_group_id  (voucher_group_id)
 #
 
 class EmailBlast < ActiveRecord::Base
